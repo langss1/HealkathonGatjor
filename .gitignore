@@ -1,16 +1,15 @@
-# Virtual environments
-venv/
-.venv/
+# ==== Node / JS ====
+node_modules/
+Riset Agentic AI/node_modules/
 
-# Python cache
+# ==== Python venv ====
+.venv/
+venv/
+Riset Agentic AI/sani_gemma/.venv/
+
+# ==== Python cache ====
 __pycache__/
 *.pyc
 
-# Large ML files
-*.safetensors
-*.bin
-*.pt
-
-# Huggingface cache
-~/.cache/
-huggingface/
+# Misc
+.DS_Store
