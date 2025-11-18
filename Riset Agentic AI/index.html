@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SANI – Dashboard (LLM Routing)</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --primary: #0b7dda;
+      --accent: #0f9d58;
+      --bg: #f4f6fb;
+      --text-main: #111827;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+    .navbar-sani {
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+    }
+    .brand-badge {
+      height: 44px;
+      width: 44px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #0b7dda, #0f9d58);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .brand-subtitle {
+      font-size: 0.75rem;
+      margin-top: -4px;
+      color: #6b7280;
+    }
+    .hero {
+      padding: 4rem 0 2.5rem;
+    }
+    .hero-title {
+      font-weight: 800;
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      line-height: 1.2;
+    }
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+    .hero-highlight {
+      color: var(--primary);
+    }
+    .badge-soft {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
+      color: #0369a1;
+    }
+    .hero-list {
+      font-size: 0.9rem;
+      padding-left: 1rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .3rem .75rem;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-size: .8rem;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    @media (min-width: 992px) {
+      .layout { flex-direction: row; align-items: flex-start; }
+    }
+
+    .chat-card {
+      background: #fff;
+      border-radius: 1.1rem;
+      padding: 1.1rem;
+      border: 1px solid rgba(148,163,184,.5);
+      box-shadow: 0 18px 45px rgba(15,23,42,.09);
+      display: flex;
+      flex-direction: column;
+      flex: 1.2;
+      min-height: 380px;
+      max-height: 460px;
+    }
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: .6rem;
+    }
+    .chat-header-left {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+    }
+    .chat-avatar {
+      height: 38px;
+      width: 38px;
+      border-radius: 14px;
+      background: linear-gradient(135deg,#0b7dda,#0f9d58);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight:800;
+      font-size:1rem;
+    }
+    .chat-label {
+      font-size: .75rem;
+      color:#6b7280;
+      display:flex;
+      align-items:center;
+      gap:.3rem;
+    }
+    .chat-label .dot {
+      width:8px;height:8px;border-radius:999px;background:#22c55e;
+    }
+    .chat-body {
+      flex:1;
+      overflow-y:auto;
+      padding:.4rem .1rem;
+      margin-bottom:.6rem;
+      scroll-behavior:smooth;
+    }
+    .msg {
+      max-width:90%;
+      padding:.5rem .8rem;
+      border-radius:.85rem;
+      font-size:.85rem;
+      margin-bottom:.35rem;
+      line-height:1.35;
+    }
+    .msg-user {
+      margin-left:auto;
+      border-bottom-right-radius:.25rem;
+      background:#0b7dda;
+      color:#fff;
+    }
+    .msg-bot {
+      margin-right:auto;
+      border-bottom-left-radius:.25rem;
+      background:#eef2ff;
+      color:#111827;
+    }
+    .msg-meta {
+      font-size:.7rem;
+      color:#9ca3af;
+      margin-bottom:.2rem;
+    }
+    .chat-input-wrap {
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.7);
+      padding:.25rem .4rem .25rem .9rem;
+      display:flex;
+      align-items:center;
+      gap:.4rem;
+      background:#f9fafb;
+    }
+    .chat-input-wrap input {
+      border:none;
+      outline:none;
+      background:transparent;
+      font-size:.85rem;
+      flex:1;
+    }
+    .quick-replies {
+      display:flex;
+      flex-wrap:wrap;
+      gap:.4rem;
+      margin-bottom:.35rem;
+    }
+    .quick-btn {
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.7);
+      background:#fff;
+      font-size:.72rem;
+      padding:.18rem .65rem;
+      cursor:pointer;
+    }
+    .quick-btn:hover { background:#eff6ff; }
+
+    .panel-card {
+      background:#fff;
+      border-radius:1.1rem;
+      padding:1.1rem;
+      border:1px solid rgba(148,163,184,.35);
+      flex:1;
+    }
+    .panel-card h5 {
+      font-size:.95rem;
+      font-weight:700;
+      margin-bottom:.5rem;
+    }
+    .panel-badge {
+      font-size:.72rem;
+      border-radius:999px;
+      padding:.18rem .6rem;
+      background:#eff6ff;
+      color:#0369a1;
+      display:inline-flex;
+      align-items:center;
+      gap:.25rem;
+      margin-bottom:.35rem;
+    }
+    .panel-list {
+      font-size:.85rem;
+      padding-left:1.1rem;
+    }
+
+    footer {
+      margin-top:2.5rem;
+      padding:1.2rem 0;
+      font-size:.78rem;
+      color:#6b7280;
+      border-top:1px solid rgba(148,163,184,.35);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-sani sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <div class="brand-badge">S</div>
+        <div>
+          <div class="brand-title">SANI</div>
+          <div class="brand-subtitle">Sahabat JKN Indonesia</div>
+        </div>
+      </a>
+    </div>
+  </nav>
+
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-5">
+          <div class="mb-2">
+            <span class="badge-soft">MAIN LLM • DASHBOARD</span>
+          </div>
+          <h1 class="hero-title mb-3">
+            SANI Dashboard:<br />
+            GPT paham niat,<br />
+            <span class="hero-highlight">lalu buka halaman & isi form otomatis.</span>
+          </h1>
+          <p class="hero-subtitle mb-2">
+            Tulis kalimat bebas seperti:
+          </p>
+          <ul class="hero-list">
+            <li><em>“Nama saya Budi, daftarkan saya berobat ke RS Mitra besok.”</em></li>
+            <li><em>“Saya bernama Dewi, mau pindah faskes ke Puskesmas Sukamaju di Kota Bandung.”</em></li>
+          </ul>
+          <p class="hero-subtitle mb-1">
+            GPT akan mengembalikan JSON intent + slot (nama, RS/Faskes, kota, tanggal),
+            lalu halaman ini otomatis mengarahkan kamu ke form RS / Faskes dengan field terisi.
+          </p>
+        </div>
+
+        <div class="col-lg-7" id="demo">
+          <div class="layout">
+            <!-- CHAT -->
+            <div class="chat-card">
+              <div class="chat-header">
+                <div class="chat-header-left">
+                  <div class="chat-avatar">S</div>
+                  <div>
+                    <div style="font-size:.9rem;font-weight:600;">
+                      SANI – LLM Router
+                    </div>
+                    <div class="chat-label">
+                      <span class="dot"></span> GPT → JSON intent & slots
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="quick-replies">
+                <button class="quick-btn" data-msg="Nama saya Budi, daftarkan saya berobat ke RS Mitra besok.">
+                  Contoh daftar RS
+                </button>
+                <button class="quick-btn" data-msg="Saya bernama Dewi, mau pindah faskes ke Puskesmas Sukamaju di Kota Bandung.">
+                  Contoh pindah faskes
+                </button>
+              </div>
+
+              <div class="chat-body" id="chatBody"></div>
+
+              <div class="chat-input-wrap mt-1">
+                <input type="text" id="chatInput"
+                  placeholder="Tulis: Nama saya ..., daftarkan ke RS/Faskes ..." />
+                <button class="btn btn-light btn-sm" type="button" id="clearBtn">
+                  <i class="bi bi-trash"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" type="button" id="sendBtn">
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- PANEL INFO -->
+            <div class="panel-card">
+              <div class="panel-badge">
+                <i class="bi bi-diagram-3"></i> Alur SANI
+              </div>
+              <h5>Pipeline Agentic Berbasis GPT</h5>
+              <ol class="panel-list">
+                <li>Frontend kirim teks ke <code>/api/parse-intent</code>.</li>
+                <li>GPT balikan JSON: intent + slot.</li>
+                <li>Frontend baca JSON → redirect ke halaman RS/Faskes dengan query string.</li>
+                <li>Halaman tujuan auto-isi form dari query string.</li>
+              </ol>
+              <p style="font-size:.82rem;color:#6b7280;margin-top:.4rem;">
+                Jadi decision-making benar-benar diambil oleh model LLM, bukan sekedar regex.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <div>&copy; 2025 – SANI Dashboard. LLM Routing &amp; Auto-fill.</div>
+      <div>
+        <i class="bi bi-heart-pulse"></i> BPJS Kesehatan •
+        <i class="bi bi-hospital"></i> Mobile JKN •
+        <i class="bi bi-cpu"></i> Agentic AI
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE = "http://localhost:3000";
+
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function addMessage(text, from = "bot", meta = "") {
+      const wrap = document.createElement("div");
+      if (meta) {
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "msg-meta";
+        metaDiv.innerHTML = meta;
+        wrap.appendChild(metaDiv);
+      }
+      const bubble = document.createElement("div");
+      bubble.className = "msg " + (from === "user" ? "msg-user" : "msg-bot");
+      bubble.innerHTML = text;
+      wrap.appendChild(bubble);
+      chatBody.appendChild(wrap);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    async function routeWithLLM(message) {
+      try {
+        addMessage("Mengirim ke model LLM untuk dianalisis...", "bot", "SANI • Processing");
+
+        const resp = await fetch(API_BASE + "/api/parse-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message }),
+        });
+
+        if (!resp.ok) {
+          addMessage("Terjadi error saat memanggil API backend.", "bot", "SANI • Error");
+          return;
+        }
+
+        const data = await resp.json();
+
+        const intent = data.intent;
+        const slots = data.slots || {};
+        const nama = slots.nama || "Peserta JKN";
+        const rs = slots.rs || "";
+        const faskes = slots.faskes || "";
+        const kota = slots.kota || "";
+        const tanggal = slots.tanggal || "";
+
+        if (intent === "daftar_rs") {
+          addMessage(
+            `Intent: <strong>Daftar RS</strong><br/>
+             Nama: <strong>${nama}</strong><br/>
+             RS: <strong>${rs || "belum jelas"}</strong><br/>
+             Tanggal: <strong>${tanggal || "belum disebut"}</strong><br/><br/>
+             Membuka halaman pendaftaran RS dengan form terisi otomatis...`,
+            "bot",
+            "SANI • LLM Router"
+          );
+
+          const params = new URLSearchParams({
+            nama,
+            rs,
+            tgl: tanggal || "",
+          });
+          setTimeout(() => {
+            window.location.href = "daftar-rs.html?" + params.toString();
+          }, 1200);
+          return;
+        }
+
+        if (intent === "pindah_faskes") {
+          addMessage(
+            `Intent: <strong>Pindah/Daftar Faskes</strong><br/>
+             Nama: <strong>${nama}</strong><br/>
+             Faskes: <strong>${faskes || "belum jelas"}</strong><br/>
+             Wilayah: <strong>${kota || "belum disebut"}</strong><br/><br/>
+             Membuka halaman faskes dengan form terisi otomatis...`,
+            "bot",
+            "SANI • LLM Router"
+          );
+
+          const params = new URLSearchParams({
+            nama,
+            faskes,
+            kota,
+          });
+          setTimeout(() => {
+            window.location.href = "daftar-faskes.html?" + params.toString();
+          }, 1200);
+          return;
+        }
+
+        addMessage(
+          `Model belum yakin apakah ini <strong>Daftar RS</strong> atau <strong>Faskes</strong>.<br/>
+           Coba sebutkan dengan lebih jelas, misal:<br/>
+           <em>“Nama saya Budi, daftarkan saya berobat ke RS Mitra besok.”</em>`,
+          "bot",
+          "SANI • Intent Tidak Jelas"
+        );
+      } catch (err) {
+        console.error(err);
+        addMessage("Terjadi error tak terduga di frontend.", "bot", "SANI • Error");
+      }
+    }
+
+    function sendMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      addMessage(text, "user");
+      chatInput.value = "";
+      routeWithLLM(text);
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+    clearBtn.addEventListener("click", () => {
+      chatBody.innerHTML = "";
+      seedWelcome();
+    });
+    document.querySelectorAll(".quick-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        chatInput.value = btn.dataset.msg;
+        sendMessage();
+      });
+    });
+
+    function seedWelcome() {
+      addMessage(
+        "Halo, saya <strong>SANI</strong>. Saya akan memanggil GPT untuk membaca kalimatmu, mengembalikan JSON intent + slot, dan merutekan ke halaman RS/Faskes dengan auto-fill.",
+        "bot",
+        "SANI • Dashboard"
+      );
+      addMessage(
+        "Contoh:<br/><em>“Nama saya Budi, daftarkan saya berobat ke RS Mitra besok.”</em>",
+        "bot"
+      );
+    }
+
+    seedWelcome();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
