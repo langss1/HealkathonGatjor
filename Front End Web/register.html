@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Registrasi Mobile JKN</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .register-card {
+      max-width: 420px;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+
+    .register-header {
+      background: radial-gradient(circle at top, #31cfff 0%, #007ad9 40%, #0059a8 100%);
+    }
+
+    .register-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .nik-label {
+      font-size: 0.75rem;
+      color: #0084c7;
+      font-weight: 600;
+    }
+
+    .link-privacy {
+      color: #0084c7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link-privacy:hover {
+      text-decoration: underline;
+    }
+
+    .btn-register {
+      border-radius: 999px;
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      border: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .btn-register:hover {
+      filter: brightness(0.95);
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="register-card bg-white shadow-lg w-100">
+
+      <!-- HEADER -->
+      <div class="register-header text-white d-flex align-items-center px-3 py-2">
+        <button class="btn btn-link text-white px-0 me-2">
+          <i class="bi bi-arrow-left fs-4"></i>
+        </button>
+
+        <div class="flex-grow-1 text-center me-4">
+         
+            <img src="/assets/logo.png" alt="Logo JKN" class="img-fluid" style="max-width: 18%; height: auto;">
+          
+          <h6 class="mb-0 fw-semibold small">Pendaftaran Pengguna Mobile</h6>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="p-4">
+
+        <div class="text-center mb-3">
+          <p class="fw-semibold mb-1 small">Selamat Datang di Mobile JKN</p>
+          <p class="text-muted small mb-0">Silahkan isi data diri Anda dengan sesuai.</p>
+        </div>
+
+        <!-- NIK (SEKARANG INPUT) -->
+        <div class="mb-3">
+          <label class="nik-label mb-1">Nomor Induk Kependudukan (NIK)</label>
+          <input type="text" class="form-control form-control-sm rounded-3"
+                 placeholder="Masukkan NIK">
+        </div>
+
+        <!-- FORM -->
+        <form>
+          <div class="mb-3">
+            <label class="form-label small mb-1">Nomor Handphone</label>
+            <input type="tel" class="form-control form-control-sm rounded-3" placeholder="Nomor Handphone">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small mb-1">Alamat Email (Opsional)</label>
+            <input type="email" class="form-control form-control-sm rounded-3" placeholder="Alamat Email">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small mb-1">Password</label>
+            <div class="input-group input-group-sm">
+              <input type="password" class="form-control rounded-start-3" placeholder="Password">
+              <span class="input-group-text rounded-end-3">
+                <i class="bi bi-eye-slash"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small mb-1">Konfirmasi Password</label>
+            <div class="input-group input-group-sm">
+              <input type="password" class="form-control rounded-start-3" placeholder="Konfirmasi Password">
+              <span class="input-group-text rounded-end-3">
+                <i class="bi bi-eye-slash"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Petunjuk password -->
+          <div class="mb-3">
+            <p class="small fw-semibold mb-1">Petunjuk Pengisian Password Baru :</p>
+            <ul class="small text-muted mb-0 ps-3">
+              <li>Password terdiri dari setidaknya 6 (enam) karakter</li>
+              <li>Password harus mengandung angka/numerik</li>
+              <li>Password harus mengandung huruf besar dan kecil</li>
+            </ul>
+          </div>
+
+          <!-- Kebijakan privasi -->
+          <p class="small text-muted mb-4">
+            Dengan melakukan pendaftaran pengguna aplikasi Mobile JKN, Anda telah
+            menyetujui <a href="#" class="link-privacy">kebijakan privasi</a> aplikasi Mobile JKN.
+          </p>
+
+          <button type="submit" class="btn btn-register w-100 py-2">
+            Registrasi
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
