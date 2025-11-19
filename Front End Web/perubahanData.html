@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Perubahan Data Peserta - Mobile JKN Web</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f4f7fb;
+    }
+
+    /* ===== HEADER ===== */
+    .jkn-header {
+      background: linear-gradient(90deg, #0064c8 0%, #01bafc 100%);
+      color: #fff;
+      padding: 0.7rem 0.9rem 0.75rem;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .back-btn {
+      border: none;
+      background: transparent;
+      color: #fff;
+      font-size: 1.3rem;
+      padding: 0;
+    }
+
+    .header-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    main {
+      padding: 0.85rem 0.9rem 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      main {
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .jkn-header {
+        padding-left: calc((100% - 480px)/2 + 0.9rem);
+        padding-right: calc((100% - 480px)/2 + 0.9rem);
+      }
+    }
+
+    .field-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ===== DROPDOWN KEPESERTAAN TERDAFTAR ===== */
+    .peserta-wrapper {
+      position: relative;
+    }
+
+    .select-peserta {
+      font-size: 0.8rem;
+      border-radius: 9px;
+      border: 1px solid #0084c7;
+      padding-right: 2.4rem;
+      padding-left: 0.6rem;
+      height: 36px;
+    }
+
+    .peserta-icon {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #00a3ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    /* ===== KARTU KIS ===== */
+    .kis-card {
+      margin-top: 0.7rem;
+      margin-bottom: 0.3rem;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(9, 30, 66, 0.15);
+      padding: 10px 12px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .kis-image {
+      width: 100px;
+      height: 62px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #24c6dc, #514a9d);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .kis-image::after {
+      content: "KIS";
+      position: absolute;
+      bottom: 6px;
+      left: 10px;
+      font-size: 0.8rem;
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .kis-text {
+      font-size: 0.72rem;
+      color: #4b5563;
+    }
+
+    .kis-text .name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    /* ===== LIST DATA PESERTA ===== */
+    .data-list {
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(15, 42, 82, 0.06);
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .data-row {
+      padding: 8px 12px 6px;
+      border-bottom: 1px solid #eef0f6;
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-row-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1px;
+    }
+
+    .data-label {
+      font-size: 0.8rem;
+      color: #0084c7;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .data-label .dot-red {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #e53935;
+      display: inline-block;
+    }
+
+    .data-label .icon-small {
+      font-size: 0.9rem;
+      color: #ff9800;
+    }
+
+    .data-label .icon-green {
+      font-size: 0.9rem;
+      color: #43a047;
+    }
+
+    .data-label .icon-home {
+      font-size: 0.9rem;
+      color: #f44336;
+    }
+
+    .data-chevron {
+      color: #cbd2e1;
+      font-size: 1.1rem;
+    }
+
+    .data-value {
+      font-size: 0.8rem;
+      color: #374151;
+      margin-bottom: 1px;
+    }
+
+    .data-update {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .data-row-btn {
+     
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 0;
+      text-align: left;
+    }
+    
+
+    /* ===== DROPDOWN ANGGOTA DI DALAM DATA-LIST ===== */
+    .anggota-row {
+      border-bottom: 1px solid #eef0f6;
+    }
+
+    .anggota-select-wrapper {
+      position: relative;
+      border: 1px solid #0084c7;
+      border-radius: 9px;
+      padding-right: 32px;
+      padding-left: 6px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+    }
+
+    .anggota-select {
+      border: none;
+      outline: none;
+      box-shadow: none;
+      font-size: 0.82rem;
+      padding: 0;
+      width: 100%;
+      color: #374151;
+    }
+
+    .anggota-select:focus {
+      box-shadow: none;
+    }
+
+    .anggota-icon-circle {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00a3ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.8rem;
+    }
+
+    /* ===== MODAL PERUBAHAN FASKES ===== */
+    .modal-faskes .modal-dialog {
+      max-width: 420px;
+      margin: 1.5rem auto;
+    }
+
+    .modal-faskes .modal-content {
+      border-radius: 18px;
+      border: none;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .modal-faskes .modal-header {
+      background: linear-gradient(90deg, #0064c8 0%, #01bafc 100%);
+      color: #ffffff;
+      padding: 0.6rem 0.9rem;
+    }
+
+    .modal-faskes .modal-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .modal-faskes .btn-close {
+      filter: invert(1);
+      opacity: 0.9;
+    }
+
+    .modal-faskes .modal-body {
+      padding: 0.9rem 1rem 1rem;
+      font-size: 0.78rem;
+      color: #4b5563;
+    }
+
+    .modal-faskes .form-check-label {
+      font-size: 0.78rem;
+      color: #0084c7;
+      font-weight: 500;
+    }
+
+    .modal-faskes .help-text {
+      font-size: 0.76rem;
+      margin: 0.4rem 0 0.6rem;
+    }
+
+    .label-blue {
+      font-size: 0.78rem;
+      color: #0084c7;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .form-control-faskes,
+    .form-select-faskes {
+      font-size: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #0084c7;
+      height: 36px;
+    }
+
+    .form-select-faskes {
+      padding-right: 2.2rem;
+    }
+
+    .select-wrapper {
+      position: relative;
+      margin-bottom: 0.65rem;
+    }
+
+    .select-wrapper .circle-icon {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #00a3ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.7rem;
+    }
+
+    .btn-simpan {
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      padding: 0.55rem 0;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #ffffff;
+      background: linear-gradient(145deg, #0064c8, #00a3ff);
+      margin-top: 0.4rem;
+    }
+
+    .btn-simpan:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="jkn-header">
+    <div class="header-inner">
+      <button class="back-btn" onclick="history.back()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <div class="header-title">Perubahan Data Peserta</div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <!-- Dropdown Kepesertaan Terdaftar -->
+    <div class="field-label">Kepesertaan Terdaftar</div>
+    <div class="peserta-wrapper mb-2">
+      <select class="form-select select-peserta">
+        <option>Kepesertaan Terdaftar</option>
+        <option>Nomor Kartu Keluarga</option>
+      </select>
+      <div class="peserta-icon">
+        <i class="bi bi-chevron-down"></i>
+      </div>
+    </div>
+
+    <!-- Kartu KIS -->
+    <div class="kis-card">
+      <div class="kis-image"></div>
+      <div class="kis-text">
+        <div class="name">GLANG WASIS WICAKSONO</div>
+        <div>Tanggal Lahir: 25-10-2005</div>
+        <div>NIK: 3216052510050007</div>
+        <div>Faskes Tingkat I: TAMBUN</div>
+      </div>
+    </div>
+
+    <!-- Data peserta (termasuk dropdown anggota di baris pertama) -->
+    <div class="data-list">
+
+      <!-- DROPDOWN ANGGOTA KELUARGA DI DALAM DATA-LIST -->
+      <div class="data-row anggota-row">
+        <div class="anggota-select-wrapper">
+          <select class="form-select anggota-select">
+            <option>GLANG WASIS WICAKSONO (00013785822...)</option>
+            <option>Ayah (0000000000001)</option>
+            <option>Ibu (0000000000002)</option>
+          </select>
+          <div class="anggota-icon-circle">
+            <i class="bi bi-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- NIK -->
+      <div class="data-row">
+        <div class="data-row-header">
+          <div class="data-label">
+            <span class="dot-red"></span>
+            NIK
+          </div>
+          <i class="bi bi-chevron-right data-chevron"></i>
+        </div>
+        <div class="data-value">3216052510050007</div>
+      </div>
+
+      <!-- Segmen Peserta -->
+      <div class="data-row">
+        <div class="data-row-header">
+          <div class="data-label">
+            <i class="bi bi-person-badge icon-small"></i>
+            Segmen Peserta
+          </div>
+          <i class="bi bi-chevron-right data-chevron"></i>
+        </div>
+        <div class="data-value">Pekerja Penerima Upah</div>
+      </div>
+
+      <!-- Nomor Handphone -->
+      <div class="data-row">
+        <div class="data-row-header">
+          <div class="data-label">
+            <i class="bi bi-telephone icon-green"></i>
+            Nomor Handphone
+          </div>
+          <i class="bi bi-chevron-right data-chevron"></i>
+        </div>
+        <div class="data-value">083804870824</div>
+        <div class="data-update">Update : 24-02-2022</div>
+      </div>
+
+      <!-- Email -->
+      <div class="data-row">
+        <div class="data-row-header">
+          <div class="data-label">
+            <i class="bi bi-envelope icon-small"></i>
+            Email
+          </div>
+          <i class="bi bi-chevron-right data-chevron"></i>
+        </div>
+        <div class="data-value">gilangwasis32@gmail.com</div>
+      </div>
+
+      <!-- Alamat Surat -->
+      <div class="data-row">
+        <div class="data-row-header">
+          <div class="data-label">
+            <i class="bi bi-house-door icon-home"></i>
+            Alamat Surat
+          </div>
+          <i class="bi bi-chevron-right data-chevron"></i>
+        </div>
+        <div class="data-value">
+          RW 04, JL. JEJALENJAYA, KEC. TAMBUN UTARA, KAB. BEKASI, 11111
+        </div>
+        <div class="data-update">Update : 24-02-2022</div>
+      </div>
+
+      <!-- Faskes Tingkat I (TRIGGER MODAL) -->
+      <button type="button" class="data-row-btn" data-bs-toggle="modal" data-bs-target="#modalFaskes">
+        <div class="data-row">
+          <div class="data-row-header">
+            <div class="data-label">
+              <i class="bi bi-hospital icon-small"></i>
+              Fasilitas Kesehatan Tingkat I
+            </div>
+            <i class="bi bi-chevron-right data-chevron"></i>
+          </div>
+          <div class="data-value">TAMBUN</div>
+          <div class="data-update">Update : 01-01-2025</div>
+        </div>
+      </button>
+
+      <!-- Kelas -->
+      <div class="data-row">
+        <div class="data-row-header">
+          <div class="data-label">
+            <i class="bi bi-card-list icon-small"></i>
+            Kelas
+          </div>
+          <i class="bi bi-chevron-right data-chevron"></i>
+        </div>
+        <div class="data-value">I (SATU)</div>
+        <div class="data-update">Update : 01-11-2025</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL PERUBAHAN FASKES I -->
+  <div class="modal fade modal-faskes" id="modalFaskes" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Perubahan Faskes I</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-check mb-1">
+            <input class="form-check-input" type="checkbox" value="" id="cekSatuKeluarga">
+            <label class="form-check-label" for="cekSatuKeluarga">
+              Perubahan Satu Keluarga
+            </label>
+          </div>
+          <p class="help-text">
+            Perubahan Fasilitas Kesehatan dapat dilakukan minimal 3 bulan sekali.
+          </p>
+
+          <div class="mb-2">
+            <div class="label-blue">Provinsi</div>
+            <div class="select-wrapper">
+              <select class="form-select form-select-faskes">
+                <option>DKI JAKARTA</option>
+                <option>JAWA BARAT</option>
+                <option>JAWA TENGAH</option>
+              </select>
+              <div class="circle-icon">
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="label-blue">Kota/Kabupaten</div>
+            <div class="select-wrapper">
+              <select class="form-select form-select-faskes">
+                <option>Pemalang</option>
+                <option>Tegal</option>
+                <option>Purwokerto</option>
+              </select>
+              <div class="circle-icon">
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-1">
+            <div class="label-blue">Fasilitas Kesehatan</div>
+            <div class="select-wrapper">
+              <select class="form-select form-select-faskes">
+                <option>Pilih Fasilitas Kesehatan</option>
+                <option>Puskesmas A</option>
+                <option>Puskesmas B</option>
+                <option>RSUD Contoh</option>
+              </select>
+              <div class="circle-icon">
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-simpan">Simpan</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

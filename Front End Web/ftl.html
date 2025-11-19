@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Faskes Rujukan Tingkat Lanjut - Mobile JKN Web</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f4f7fb;
+    }
+
+    /* ===== HEADER ===== */
+    .jkn-header {
+      background: linear-gradient(90deg, #0064c8 0%, #01bafc 100%);
+      color: #fff;
+      padding: 0.65rem 0.9rem 0.7rem;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .back-btn {
+      border: none;
+      background: transparent;
+      color: #fff;
+      font-size: 1.3rem;
+      padding: 0;
+    }
+
+    .header-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    main {
+      margin-top: 0;
+      padding: 0.85rem 0.9rem 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      main {
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .jkn-header {
+        padding-left: calc((100% - 480px)/2 + 0.9rem);
+        padding-right: calc((100% - 480px)/2 + 0.9rem);
+      }
+    }
+
+    /* tombol muat ulang (di step 3) */
+    .reload-wrapper {
+      text-align: center;
+      margin: 0.6rem 0 0.5rem;
+      display: none;
+    }
+
+    .btn-muat-ulang {
+      border-radius: 999px;
+      border: none;
+      padding: 0.25rem 1.1rem;
+      font-size: 0.8rem;
+      background: #ffffff;
+      color: #0288d1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .field-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ===== DROPDOWN PESERTA (STEP 1) ===== */
+    .peserta-wrapper {
+      position: relative;
+    }
+
+    .select-peserta {
+      font-size: 0.8rem;
+      border-radius: 9px;
+      border: 1px solid #8fd2ff;
+      padding-right: 2.4rem;
+      padding-left: 0.6rem;
+      height: 36px;
+    }
+
+    .peserta-icon {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #00a3ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    /* ===== STEP 1 – KARTU RUJUKAN ===== */
+    .rujukan-card {
+      border-radius: 18px;
+      border: 1px solid #e4e7f0;
+      background-color: #ffffff;
+      padding: 0.85rem 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      margin-top: 0.9rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .queue-pill {
+      width: 70px;
+      height: 78px;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #406bff, #20c6ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .rujukan-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .rujukan-meta {
+      font-size: 0.78rem;
+      color: #6c7484;
+    }
+
+    .rujukan-meta div {
+      line-height: 1.3;
+    }
+
+    .rujukan-meta i {
+      font-size: 0.9rem;
+      margin-right: 4px;
+    }
+
+    .rujukan-meta .dot {
+      font-size: 1.2rem;
+      line-height: 0;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    .rujukan-chevron {
+      margin-left: auto;
+      color: #c8cfdd;
+      font-size: 1.2rem;
+    }
+
+    /* ===== STEP 2 – FORM JADWAL ===== */
+    .info-static-line {
+      font-size: 0.8rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .info-static-label {
+      color: #0084c7;
+      font-weight: 500;
+      display: block;
+    }
+
+    .info-static-value {
+      color: #555e6e;
+    }
+
+    .section-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #0084c7;
+      margin-top: 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control-sm,
+    .form-select-sm.custom-sm {
+      font-size: 0.82rem;
+      height: 36px;
+      border-radius: 8px;
+    }
+
+    .form-select-sm.custom-sm {
+      padding-right: 2rem;
+    }
+
+    .btn-daftar {
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      padding: 0.65rem 0;
+      margin-top: 1.3rem;
+      font-size: 0.86rem;
+      background: linear-gradient(145deg, #0193d9, #00b0ff);
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .btn-daftar:active {
+      transform: scale(0.98);
+    }
+
+    /* ===== STEP 3 – DETAIL ANTREAN (TIKET) ===== */
+.detail-card {
+  border-radius: 18px;
+  background-color: #f2fbff;   /* warna biru muda di luar tiket */
+  border: none;
+  padding: 10px 8px 12px;
+}
+
+/* wadah tiket putih di dalam */
+.ticket {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(15, 42, 82, 0.08);
+}
+
+/* bagian atas tiket */
+.ticket-top {
+  padding: 10px 12px 8px;
+  position: relative;
+}
+
+/* judul RS */
+.detail-hospital {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+/* baris teks kecil bawah judul */
+.detail-row {
+  font-size: 0.8rem;
+  color: #5b6475;
+}
+
+.detail-row span {
+  font-weight: 500;
+  color: #273142;
+}
+
+/* baris info dengan ikon (Poli, Tgl Rujukan, Kode Booking) */
+.detail-info-line {
+  font-size: 0.8rem;
+  color: #5b6475;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3px;
+}
+
+.detail-info-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.detail-info-left i {
+  font-size: 0.9rem;
+}
+
+.detail-info-right {
+  font-weight: 500;
+  color: #273142;
+}
+
+/* garis tengah + kupingan kiri/kanan */
+.ticket-divider-wrapper {
+  position: relative;
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+.ticket-divider {
+  border-top: 1px solid #e3e6f2;
+}
+
+.ticket-divider-wrapper::before,
+.ticket-divider-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #f2fbff;   /* sama dengan background .detail-card */
+  transform: translateY(-50%);
+}
+
+.ticket-divider-wrapper::before {
+  left: -7px;
+}
+
+.ticket-divider-wrapper::after {
+  right: -7px;
+}
+
+/* bagian bawah tiket */
+.ticket-bottom {
+  padding: 10px 12px 12px;
+  text-align: center;
+}
+
+/* teks judul nomor antrean */
+.queue-caption {
+  font-size: 0.74rem;
+  color: #7a8293;
+  margin-bottom: 2px;
+}
+
+/* angka antrean besar */
+.big-queue {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #0084c7;
+  line-height: 1.1;
+}
+
+/* baris info sisa antrean / estimasi / peserta */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.info-box {
+  font-size: 0.74rem;
+  color: #7a8293;
+  flex: 1;
+}
+
+.info-box.center {
+  text-align: center;
+}
+
+.info-box span {
+  display: block;
+  font-weight: 500;
+  color: #273142;
+}
+
+.info-box i {
+  font-size: 0.9rem;
+  margin-right: 3px;
+}
+
+/* catatan kecil di bawah tombol */
+.info-small {
+  font-size: 0.72rem;
+  color: #7a8293;
+}
+
+/* tombol di bawah tiket */
+.btn-checkin,
+.btn-batal {
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  padding: 0.65rem 0;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: #fff;
+  margin-top: 8px;
+}
+
+.btn-checkin {
+  background: linear-gradient(145deg, #00a3ff, #00c3ff);
+}
+
+.btn-batal {
+  background: linear-gradient(145deg, #ff7b3a, #ff9933);
+}
+
+.btn-checkin:active,
+.btn-batal:active {
+  transform: scale(0.98);
+}
+
+/* kontrol step (biarkan seperti sebelumnya) */
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="jkn-header">
+    <div class="header-inner py-2">
+      <button class="back-btn" onclick="handleBack()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <div class="header-title" id="headerTitle" >
+        Faskes Rujukan Tingkat Lanjut
+      </div>
+    </div>
+  </header>
+
+  <!-- TOMBOL MUAT ULANG (STEP 3) -->
+  <div id="reloadWrapper" class="reload-wrapper">
+    <button type="button" class="btn-muat-ulang">
+      <i class="bi bi-arrow-clockwise"></i> Muat ulang
+    </button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- ========== STEP 1 : KARTU RUJUKAN ========== -->
+    <section id="step1" class="step active">
+
+      <div class="field-label">Peserta</div>
+      <div class="peserta-wrapper mb-2">
+        <select class="form-select select-peserta">
+          <option>MITA NURLAILA (0000000000001)</option>
+          <option>ANGGOTA KELUARGA 1 (0000000000002)</option>
+          <option>ANGGOTA KELUARGA 2 (0000000000003)</option>
+        </select>
+        <div class="peserta-icon">
+          <i class="bi bi-chevron-down"></i>
+        </div>
+      </div>
+
+      <!-- Kartu Rujukan -->
+      <div class="rujukan-card" onclick="showStep(2)">
+        <div class="queue-pill">6-2</div>
+
+        <div>
+          <div class="rujukan-title" id="hospitalNameCard">
+            RSUD ODSK PROV. SULAWESI UTARA
+          </div>
+          <div class="rujukan-meta">
+            <div>No. Rujukan: 0309R0230224...</div>
+            <div><i class="bi bi-clipboard2-check"></i>Kontrol</div>
+            <div><span class="dot">●</span>SARAF</div>
+            <div><i class="bi bi-calendar-event"></i>Dirujuk : 06 Maret 2024</div>
+          </div>
+        </div>
+
+        <i class="bi bi-chevron-right rujukan-chevron"></i>
+      </div>
+    </section>
+
+    <!-- ========== STEP 2 : PILIH TANGGAL & DOKTER ========== -->
+    <section id="step2" class="step">
+      <!-- informasi rujukan di atas form -->
+      <div class="info-static-line">
+        <span class="info-static-label">No. Rujukan</span>
+        <span class="info-static-value">0309R023022464849</span>
+      </div>
+      <div class="info-static-line">
+        <span class="info-static-label">Jumlah Pasien</span>
+        <span class="info-static-value">30</span>
+      </div>
+      <div class="info-static-line">
+        <span class="info-static-label">Kapasitas Layanan</span>
+        <span class="info-static-value">34</span>
+      </div>
+      <div class="info-static-line">
+        <span class="info-static-label">Tanggal</span>
+        <span class="info-static-value">21-Novermber-2025</span>
+      </div>
+
+      <div class="section-title">Pilih Tanggal Rencana Kunjungan</div>
+      <input type="date" id="tanggalKunjungan" class="form-control form-control-sm mb-3" />
+
+      <div class="section-title">Pilih Dokter</div>
+      <select id="dokterKunjungan" class="form-select form-select-sm custom-sm">
+        <option value="">Pilih Jadwal Dokter</option>
+        <option>dr. MATOKE LENNY HELLEN, Sp.S</option>
+        <option>dr. CONTOH DOKTER 1, Sp.S</option>
+        <option>dr. CONTOH DOKTER 2, Sp.S</option>
+      </select>
+
+      <button type="button" class="btn-daftar" onclick="handleDaftar()">
+        Daftar pelayanan
+      </button>
+    </section>
+
+    <!-- ========== STEP 3 : DETAIL ANTREAN ========== -->
+<section id="step3" class="step">
+  <div class="detail-card">
+    <div class="ticket">
+
+      <!-- BAGIAN ATAS TIKET -->
+      <div class="ticket-top">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="detail-hospital" id="hospitalNameDetail">
+              RSUD ODSK PROV. SULAWESI UTARA
+            </div>
+            <div class="detail-row">
+              No. Rujukan: <span>0309R0230224...</span>
+            </div>
+            <div class="detail-row">
+              dr. <span id="dokterSummary">MATOKE LENNY HELLEN, Sp.S</span>
+            </div>
+          </div>
+          <div class="text-end">
+            <i class="bi bi-qr-code-scan fs-5"></i>
+            <div style="font-size:0.72rem; color:#7a8293;">Kode Booking</div>
+          </div>
+        </div>
+
+        <!-- poli / tgl rujukan / kode booking -->
+        <div class="detail-info-line mt-2">
+          <div class="detail-info-left">
+            <i class="bi bi-circle-fill" style="color:#e91e63; font-size:0.65rem;"></i>
+            <span>Poli</span>
+          </div>
+          <div class="detail-info-right">Saraf</div>
+        </div>
+
+        <div class="detail-info-line">
+          <div class="detail-info-left">
+            <i class="bi bi-calendar-event"></i>
+            <span>Tanggal Rujukan</span>
+          </div>
+          <div class="detail-info-right">06-03-2024</div>
+        </div>
+
+        <div class="detail-info-line">
+          <div class="detail-info-left">
+            <i class="bi bi-card-text"></i>
+            <span>Kode Booking</span>
+          </div>
+          <div class="detail-info-right">CB00000001</div>
+        </div>
+
+        <!-- garis dengan kupingan -->
+        <div class="ticket-divider-wrapper">
+          <div class="ticket-divider"></div>
+        </div>
+      </div>
+
+      <!-- BAGIAN BAWAH TIKET -->
+      <div class="ticket-bottom">
+        <div class="queue-caption">Nomor Antrean Poliklinik</div>
+        <div class="big-queue">6-2</div>
+
+        <div class="info-row">
+          <div class="info-box">
+            Sisa Antrean
+            <span><i class="bi bi-people"></i>2</span>
+          </div>
+          <div class="info-box center">
+            Estimasi Dilayani
+            <span id="estimasiDilayani">06-03-2024 10:02</span>
+          </div>
+          <div class="info-box text-end">
+            Peserta Dilayani
+            <span><i class="bi bi-people"></i>-</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- tombol di luar tiket, memanjang ke bawah -->
+    <button class="btn-checkin" type="button">Check-In</button>
+    <button class="btn-batal" type="button">Batalkan</button>
+
+    <div class="info-small mt-2" style="font-size:0.72rem; color:#7a8293;">
+      * Peserta harap datang 30 menit lebih awal guna pencatatan administrasi.
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let currentStep = 1;
+
+    function showStep(step) {
+      currentStep = step;
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + step).classList.add('active');
+
+      const headerTitle = document.getElementById('headerTitle');
+      const hospitalName = document.getElementById('hospitalNameCard').textContent.trim();
+      const reloadWrapper = document.getElementById('reloadWrapper');
+
+      if (step === 1) {
+        headerTitle.textContent = 'Faskes Rujukan Tingkat Lanjut';
+        reloadWrapper.style.display = 'none';
+      } else if (step === 2) {
+        headerTitle.textContent = hospitalName;
+        reloadWrapper.style.display = 'none';
+      } else if (step === 3) {
+        headerTitle.textContent = hospitalName;
+        reloadWrapper.style.display = 'block';
+      }
+    }
+
+    function handleBack() {
+      if (currentStep === 1) {
+        history.back();
+      } else {
+        showStep(currentStep - 1);
+      }
+    }
+
+    function handleDaftar() {
+      const tgl = document.getElementById('tanggalKunjungan').value;
+      const dokter = document.getElementById('dokterKunjungan').value;
+
+      if (dokter) {
+        document.getElementById('dokterSummary').textContent = dokter;
+      }
+      if (tgl) {
+        const tampil = tgl.split('-').reverse().join('-'); // yyyy-mm-dd -> dd-mm-yyyy
+        document.getElementById('estimasiDilayani').textContent = tampil + ' 10:02';
+      }
+
+      showStep(3);
+    }
+  </script>
+</body>
+</html>
