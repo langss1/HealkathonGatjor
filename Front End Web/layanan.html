@@ -39,17 +39,6 @@
 				height: 42px;
 			}
 
-			.avatar-circle {
-				width: 40px;
-				height: 40px;
-				border-radius: 50%;
-				background-color: rgba(255, 255, 255, 0.2);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-weight: 600;
-			}
-
 			.card-antrean {
 				margin-top: -40px;
 				border-radius: 18px;
@@ -217,6 +206,90 @@
 				color: #c4c8d4;
 				font-size: 1.2rem;
 			}
+
+			/* ========== CHATBOT FLOATING BUTTON ========== */
+			.chatbot-btn {
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				width: 60px;
+				height: 60px;
+				padding: 0;
+				border: none;
+				background: none;
+				outline: none;
+				z-index: 1050;
+			}
+
+			.chatbot-img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+				object-fit: cover;
+			}
+
+			/* ========== CHATBOT MODAL ========== */
+			.chatbot-modal .modal-content {
+				border-radius: 20px;
+				overflow: hidden;
+			}
+
+			.chatbot-modal .modal-header {
+				background: radial-gradient(circle at top, #31cfff 0%, #007ad9 40%, #0059a8 100%);
+				color: #ffffff;
+			}
+
+			.chatbot-modal .chat-body {
+				background-color: #f4f7fb;
+				max-height: 320px;
+				overflow-y: auto;
+				padding: 0.75rem;
+			}
+
+			.chatbot-modal .bot-bubble {
+				background-color: #ffffff;
+				border-radius: 16px;
+				padding: 0.5rem 0.75rem;
+				font-size: 0.8rem;
+				box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+				max-width: 80%;
+			}
+
+			.chatbot-modal .user-bubble {
+				background: linear-gradient(90deg, #00c0ff, #0096ff);
+				color: #ffffff;
+				border-radius: 16px;
+				padding: 0.5rem 0.75rem;
+				font-size: 0.8rem;
+				max-width: 80%;
+			}
+
+			.chatbot-modal .chat-time {
+				font-size: 0.7rem;
+				color: #94a3b8;
+			}
+
+			.chatbot-modal .chat-input-area {
+				border-top: 1px solid #e2e8f0;
+				padding: 0.5rem 0.75rem;
+				background-color: #ffffff;
+			}
+
+			.chatbot-modal .btn-send {
+				border-radius: 999px;
+				font-size: 0.8rem;
+				padding-inline: 0.9rem;
+				background: linear-gradient(90deg, #00c0ff, #0096ff);
+				border: none;
+			}
+
+			.chatbot-avatar {
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				object-fit: cover;
+				border: 2px solid rgba(255, 255, 255, 0.7);
+			}
 		</style>
 	</head>
 	<body>
@@ -234,11 +307,8 @@
 						/>
 						<div>
 							<div class="small">Selamat datang,</div>
-							<div class="fw-semibold small">Nama Peserta</div>
+							<div class="fw-semibold small" id="namaPeserta">Nama Peserta</div>
 						</div>
-					</div>
-					<div class="avatar-circle">
-						<span>NP</span>
 					</div>
 				</div>
 				<div class="small opacity-75">
@@ -493,9 +563,9 @@
 
 						<div class="col">
 							<a
-							href="RiwayatPembayaran.html"
-							class="list-item-btn text-decoration-none text-reset"
-						>
+								href="RiwayatPembayaran.html"
+								class="list-item-btn text-decoration-none text-reset"
+							>
 								<div class="menu-icon-circle">
 									<i class="bi bi-receipt"></i>
 								</div>
@@ -554,6 +624,16 @@
 				</section>
 			</div>
 		</main>
+
+		<!-- FLOATING CHATBOT BUTTON -->
+		<button
+			type="button"
+			class="chatbot-btn"
+			data-bs-toggle="modal"
+			data-bs-target="#chatbotModal"
+		>
+			<img src="/assets/sani.jpg" alt="Chatbot" class="chatbot-img">
+		</button>
 
 		<!-- BOTTOM NAV – 5 MENU: HOME, BERITA, KARTU, FAQ, PROFIL -->
 		<nav class="bottom-nav py-1">
@@ -668,6 +748,67 @@
 		</div>
 		<!-- END MODAL -->
 
+		<!-- CHATBOT MODAL -->
+		<div class="modal fade chatbot-modal" id="chatbotModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-end modal-sm modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header py-2 d-flex align-items-center">
+						<img src="/assets/sani.jpg" alt="Avatar Bot" class="chatbot-avatar me-2">
+						<div>
+							<div class="small fw-semibold">Chatbot JKN</div>
+							<div class="chat-time">Asisten Virtual BPJS Kesehatan</div>
+						</div>
+						<button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+
+					<div class="chat-body">
+						<div class="d-flex mb-2">
+							<div class="bot-bubble">
+								<div class="fw-semibold mb-1">Halo 👋</div>
+								<div>Saya asisten virtual JKN. Saya dapat membantu menjawab pertanyaan seputar pendaftaran dan layanan Mobile JKN.</div>
+								<div class="chat-time mt-1">Baru saja</div>
+							</div>
+						</div>
+
+						<div class="d-flex justify-content-end mb-2">
+							<div class="user-bubble">
+								Bagaimana cara melihat kartu JKN saya?
+								<div class="chat-time mt-1 text-end">Contoh</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="chat-input-area">
+						<form onsubmit="event.preventDefault();">
+							<div class="input-group input-group-sm">
+								<input
+									type="text"
+									class="form-control rounded-start-pill"
+									placeholder="Ketik pertanyaan Anda..."
+								/>
+								<button class="btn btn-send rounded-end-pill" type="submit">
+									<i class="bi bi-send-fill"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Script ambil nama dari localStorage -->
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				const nama = localStorage.getItem('jknUserName');
+
+				if (nama) {
+					const namaEl = document.getElementById('namaPeserta');
+					namaEl.textContent = nama;
+				}
+			});
+		</script>
 	</body>
 </html>

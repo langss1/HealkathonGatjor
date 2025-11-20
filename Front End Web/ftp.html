@@ -189,6 +189,91 @@
       font-size: 1.1rem;
       font-weight: 600;
     }
+
+    /* ========== CHATBOT FLOATING BUTTON ========== */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      padding: 0;
+      border: none;
+      background: none;
+      outline: none;
+      z-index: 1050;
+    }
+
+    .chatbot-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ========== CHATBOT MODAL ========== */
+    .chatbot-modal .modal-content {
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .chatbot-modal .modal-header {
+      background: radial-gradient(circle at top, #31cfff 0%, #007ad9 40%, #0059a8 100%);
+      color: #ffffff;
+    }
+
+    .chatbot-modal .chat-body {
+      background-color: #f4f7fb;
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 0.75rem;
+    }
+
+    .chatbot-modal .bot-bubble {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+      max-width: 80%;
+    }
+
+    .chatbot-modal .user-bubble {
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      max-width: 80%;
+    }
+
+    .chatbot-modal .chat-time {
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+
+    .chatbot-modal .chat-input-area {
+      border-top: 1px solid #e2e8f0;
+      padding: 0.5rem 0.75rem;
+      background-color: #ffffff;
+    }
+
+    .chatbot-modal .btn-send {
+      border-radius: 999px;
+      font-size: 0.8rem;
+      padding-inline: 0.9rem;
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      border: none;
+      color: #fff;
+    }
+
+    .chatbot-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+    }
   </style>
 </head>
 <body>
@@ -301,7 +386,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
           <div class="field-inner-label mb-0">00:00 - 00:00</div>
-          <span class="badge badge-tutup">TUTUP</span>
+          <span class="badge-tutup">TUTUP</span>
         </div>
 
         <!-- tombol buka modal daftar tenaga medis -->
@@ -329,7 +414,9 @@
       </div>
 
       <!-- BUTTON SIMPAN -->
-      <button class="btn-simpan" type="button">Simpan</button>
+      <button class="btn-simpan" type="button" onclick="window.location.href='ftpsukses.html'">
+  Simpan
+</button>
 
     </div>
   </main>
@@ -380,6 +467,65 @@
             </button>
           </div>
 
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING CHATBOT BUTTON -->
+  <button
+    type="button"
+    class="chatbot-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#chatbotModal"
+  >
+    <img src="/assets/sani.jpg" alt="Chatbot" class="chatbot-img">
+  </button>
+
+  <!-- CHATBOT MODAL -->
+  <div class="modal fade chatbot-modal" id="chatbotModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-end modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header py-2 d-flex align-items-center">
+          <img src="/assets/sani.jpg" alt="Avatar Bot" class="chatbot-avatar me-2">
+          <div>
+            <div class="small fw-semibold">Chatbot JKN</div>
+            <div class="chat-time">Asisten Virtual BPJS Kesehatan</div>
+          </div>
+          <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="chat-body">
+          <div class="d-flex mb-2">
+            <div class="bot-bubble">
+              <div class="fw-semibold mb-1">Halo 👋</div>
+              <div>Saya asisten virtual JKN. Saya dapat membantu menjawab pertanyaan seputar pendaftaran pelayanan di faskes tingkat pertama.</div>
+              <div class="chat-time mt-1">Baru saja</div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mb-2">
+            <div class="user-bubble">
+              Bagaimana cara memilih jadwal tenaga medis?
+              <div class="chat-time mt-1 text-end">Contoh</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <form onsubmit="event.preventDefault();">
+            <div class="input-group input-group-sm">
+              <input
+                type="text"
+                class="form-control rounded-start-pill"
+                placeholder="Ketik pertanyaan Anda..."
+              />
+              <button class="btn btn-send rounded-end-pill" type="submit">
+                <i class="bi bi-send-fill"></i>
+              </button>
+            </div>
+          </form>
         </div>
 
       </div>

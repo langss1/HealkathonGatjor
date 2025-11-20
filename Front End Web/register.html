@@ -74,29 +74,23 @@
 
     /* ========== CHATBOT FLOATING BUTTON ========== */
     .chatbot-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;   /* ukuran tombol */
-  height: 60px;
-  padding: 0;
-  border: none;
-  background: none;     /* TANPA background */
-  outline: none;
-  z-index: 1050;
-}
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      padding: 0;
+      border: none;
+      background: none;
+      outline: none;
+      z-index: 1050;
+    }
 
-.chatbot-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;   /* bikin bulat */
-  object-fit: cover;    /* isi penuh */
-}
-
-
-    .chatbot-btn i {
-      font-size: 1.5rem;
-      color: #ffffff;
+    .chatbot-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     /* ========== CHATBOT MODAL ========== */
@@ -166,6 +160,15 @@
     .chatbot-modal .btn-send i {
       font-size: 1rem;
     }
+
+    /* Avatar di header chatbot */
+    .chatbot-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+    }
   </style>
 </head>
 
@@ -202,7 +205,13 @@
         </div>
 
         <!-- FORM -->
-        <form>
+        <form id="registerForm">
+          <!-- Tambahan Nama Lengkap -->
+          <div class="mb-3">
+            <label class="form-label small mb-1">Nama Lengkap</label>
+            <input type="text" class="form-control form-control-sm rounded-3" id="namaLengkap" placeholder="Nama Lengkap">
+          </div>
+
           <div class="mb-3">
             <label class="form-label small mb-1">Nomor Handphone</label>
             <input type="tel" class="form-control form-control-sm rounded-3" placeholder="Nomor Handphone">
@@ -260,25 +269,27 @@
 
   <!-- FLOATING CHATBOT BUTTON -->
   <button
-  type="button"
-  class="chatbot-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#chatbotModal"
->
-  <img src="/assets/sani.jpg" alt="Chatbot" class="chatbot-img">
-</button>
+    type="button"
+    class="chatbot-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#chatbotModal"
+  >
+    <img src="/assets/sani.jpg" alt="Chatbot" class="chatbot-img">
+  </button>
 
   <!-- CHATBOT MODAL -->
   <div class="modal fade chatbot-modal" id="chatbotModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-end modal-dialog-bottom modal-sm modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-end modal-sm modal-dialog-centered">
       <div class="modal-content">
 
-        <div class="modal-header py-2">
+        <div class="modal-header py-2 d-flex align-items-center">
+          <!-- Avatar di pojok kiri atas -->
+          <img src="/assets/sani.jpg" alt="Avatar Bot" class="chatbot-avatar me-2">
           <div>
             <div class="small fw-semibold">Chatbot JKN</div>
             <div class="chat-time">Asisten Virtual BPJS Kesehatan</div>
           </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <div class="chat-body">
@@ -318,6 +329,26 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script pindah ke halaman layanan + simpan nama -->
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nama = document.getElementById('namaLengkap').value.trim();
+
+      if (!nama) {
+        alert('Silakan isi Nama Lengkap terlebih dahulu.');
+        return;
+      }
+
+      // simpan nama ke localStorage
+      localStorage.setItem('jknUserName', nama);
+
+      // pindah ke halaman layanan
+      window.location.href = 'layanan.html'; // ganti nama file jika perlu
+    });
+  </script>
 
 </body>
 </html>
