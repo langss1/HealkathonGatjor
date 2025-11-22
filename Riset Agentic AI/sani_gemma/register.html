@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Registrasi Mobile JKN</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .register-card {
+      max-width: 420px;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+
+    .register-header {
+      background: radial-gradient(circle at top, #31cfff 0%, #007ad9 40%, #0059a8 100%);
+    }
+
+    .register-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .nik-label {
+      font-size: 0.75rem;
+      color: #0084c7;
+      font-weight: 600;
+    }
+
+    .link-privacy {
+      color: #0084c7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link-privacy:hover {
+      text-decoration: underline;
+    }
+
+    .btn-register {
+      border-radius: 999px;
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      border: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .btn-register:hover {
+      filter: brightness(0.95);
+      color: #fff;
+    }
+
+    /* ========== CHATBOT FLOATING BUTTON ========== */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      padding: 0;
+      border: none;
+      background: none;
+      outline: none;
+      z-index: 1050;
+    }
+
+    .chatbot-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ========== CHATBOT MODAL ========== */
+    .chatbot-modal .modal-content {
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .chatbot-modal .modal-header {
+      background: radial-gradient(circle at top, #31cfff 0%, #007ad9 40%, #0059a8 100%);
+      color: #ffffff;
+    }
+
+    .chatbot-modal .modal-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .chatbot-modal .chat-body {
+      background-color: #f4f7fb;
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 0.75rem;
+    }
+
+    .chatbot-modal .bot-bubble {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+      max-width: 80%;
+    }
+
+    .chatbot-modal .user-bubble {
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      max-width: 80%;
+    }
+
+    .chatbot-modal .chat-time {
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+
+    .chatbot-modal .chat-input-area {
+      border-top: 1px solid #e2e8f0;
+      padding: 0.5rem 0.75rem;
+      background-color: #ffffff;
+    }
+
+    .chatbot-modal .form-control {
+      font-size: 0.8rem;
+    }
+
+    .chatbot-modal .btn-send {
+      border-radius: 999px;
+      font-size: 0.8rem;
+      padding-inline: 0.9rem;
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      border: none;
+    }
+
+    .chatbot-modal .btn-send i {
+      font-size: 1rem;
+    }
+
+    /* Avatar di header chatbot */
+    .chatbot-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="register-card bg-white shadow-lg w-100">
+
+      <!-- HEADER -->
+      <div class="register-header text-white d-flex align-items-center px-3 py-2">
+        <button class="btn btn-link text-white px-0 me-2">
+          <i class="bi bi-arrow-left fs-4"></i>
+        </button>
+
+        <div class="flex-grow-1 text-center me-4">
+          <img src="/assets/logo.png" alt="Logo JKN" class="img-fluid" style="max-width: 18%; height: auto;">
+          <h6 class="mb-0 fw-semibold small">Pendaftaran Pengguna Mobile</h6>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="p-4">
+
+        <div class="text-center mb-3">
+          <p class="fw-semibold mb-1 small">Selamat Datang di Mobile JKN</p>
+          <p class="text-muted small mb-0">Silahkan isi data diri Anda dengan sesuai.</p>
+        </div>
+
+        <!-- NIK (SEKARANG INPUT) -->
+        <div class="mb-3">
+          <label class="nik-label mb-1">Nomor Induk Kependudukan (NIK)</label>
+          <input type="text" class="form-control form-control-sm rounded-3"
+                 placeholder="Masukkan NIK">
+        </div>
+
+        <!-- FORM -->
+        <form id="registerForm">
+          <!-- Tambahan Nama Lengkap -->
+          <div class="mb-3">
+            <label class="form-label small mb-1">Nama Lengkap</label>
+            <input type="text" class="form-control form-control-sm rounded-3" id="namaLengkap" placeholder="Nama Lengkap">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small mb-1">Nomor Handphone</label>
+            <input type="tel" class="form-control form-control-sm rounded-3" placeholder="Nomor Handphone">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small mb-1">Alamat Email (Opsional)</label>
+            <input type="email" class="form-control form-control-sm rounded-3" placeholder="Alamat Email">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small mb-1">Password</label>
+            <div class="input-group input-group-sm">
+              <input type="password" class="form-control rounded-start-3" placeholder="Password">
+              <span class="input-group-text rounded-end-3">
+                <i class="bi bi-eye-slash"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small mb-1">Konfirmasi Password</label>
+            <div class="input-group input-group-sm">
+              <input type="password" class="form-control rounded-start-3" placeholder="Konfirmasi Password">
+              <span class="input-group-text rounded-end-3">
+                <i class="bi bi-eye-slash"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Petunjuk password -->
+          <div class="mb-3">
+            <p class="small fw-semibold mb-1">Petunjuk Pengisian Password Baru :</p>
+            <ul class="small text-muted mb-0 ps-3">
+              <li>Password terdiri dari setidaknya 6 (enam) karakter</li>
+              <li>Password harus mengandung angka/numerik</li>
+              <li>Password harus mengandung huruf besar dan kecil</li>
+            </ul>
+          </div>
+
+          <!-- Kebijakan privasi -->
+          <p class="small text-muted mb-4">
+            Dengan melakukan pendaftaran pengguna aplikasi Mobile JKN, Anda telah
+            menyetujui <a href="#" class="link-privacy">kebijakan privasi</a> aplikasi Mobile JKN.
+          </p>
+
+          <button  type="submit" class="btn btn-register w-100 py-2" onclick="window.location.href='layanan.html'"">
+            Registrasi
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING CHATBOT BUTTON -->
+  <button
+    type="button"
+    class="chatbot-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#chatbotModal"
+  >
+    <img src="/assets/sani.jpg" alt="Chatbot" class="chatbot-img">
+  </button>
+
+  <!-- CHATBOT MODAL -->
+  <div class="modal fade chatbot-modal" id="chatbotModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-end modal-sm modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header py-2 d-flex align-items-center">
+          <!-- Avatar di pojok kiri atas -->
+          <img src="/assets/sani.jpg" alt="Avatar Bot" class="chatbot-avatar me-2">
+          <div>
+            <div class="small fw-semibold">Chatbot JKN</div>
+            <div class="chat-time">Asisten Virtual BPJS Kesehatan</div>
+          </div>
+          <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="chat-body">
+          <!-- Bot message -->
+          <div class="d-flex mb-2">
+            <div class="bot-bubble">
+              <div class="fw-semibold mb-1">Halo 👋</div>
+              <div>Saya asisten virtual JKN. Saya dapat membantu menjawab pertanyaan seputar pendaftaran dan layanan Mobile JKN.</div>
+              <div class="chat-time mt-1">Baru saja</div>
+            </div>
+          </div>
+
+          <!-- Contoh user message (dummy) -->
+          <div class="d-flex justify-content-end mb-2">
+            <div class="user-bubble">
+              Bagaimana cara registrasi pengguna baru?
+              <div class="chat-time mt-1 text-end">Contoh</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <form onsubmit="event.preventDefault();">
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control rounded-start-pill"
+                     placeholder="Ketik pertanyaan Anda...">
+              <button class="btn btn-send rounded-end-pill" type="submit">
+                <i class="bi bi-send-fill"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script pindah ke halaman layanan + simpan nama -->
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nama = document.getElementById('namaLengkap').value.trim();
+
+      if (!nama) {
+        alert('Silakan isi Nama Lengkap terlebih dahulu.');
+        return;
+      }
+
+      // simpan nama ke localStorage
+      localStorage.setItem('jknUserName', nama);
+
+      // pindah ke halaman layanan
+      window.location.href = 'layanan.html'; // ganti nama file jika perlu
+    });
+  </script>
+
+<script src="sani-agentic.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    initSaniAgentic("REGISTER");
+  });
+</script>
+</body>
+</html>
+

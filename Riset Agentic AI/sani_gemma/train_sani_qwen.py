@@ -11,7 +11,7 @@ import torch
 
 MODEL_ID = "Qwen/Qwen2-1.5B-Instruct"
 DATA_PATH = "data/sani_dataset.jsonl"
-OUTPUT_DIR = "sani-qwen2-1_5b-sani-lora-v2"  # pakai folder baru biar bersih
+OUTPUT_DIR = "sani-qwen2-1_5b-sani-lora-v3"  # <<< OUTPUT DIR V3
 
 def main():
     print("Loading tokenizer & base model...")

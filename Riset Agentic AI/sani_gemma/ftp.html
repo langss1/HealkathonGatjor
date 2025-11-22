@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Fasilitas Kesehatan Tingkat Pertama</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f4f7fb;
+    }
+
+    /* HEADER */
+    .fk-header {
+      background: radial-gradient(circle at top, #33c9ff 0%, #007ad9 45%, #0059a8 100%);
+      color: #fff;
+    }
+
+    .fk-header h6 {
+      font-size: 0.95rem;
+    }
+
+    /* SECTION / FIELD BOX */
+    .field-box {
+      background-color: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #d9e7f3;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+
+    .field-label {
+      font-size: 0.8rem;
+      color: #0084c7;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .field-inner-label {
+      font-size: 0.78rem;
+      color: #6c7a89;
+      margin-bottom: 2px;
+    }
+
+    .field-select-btn {
+      border-radius: 10px;
+      border: 1px solid #d9e7f3;
+      background-color: #ffffff;
+      width: 100%;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .field-select-btn span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .field-select-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.15rem rgba(0, 132, 199, 0.25);
+      border-color: #0084c7;
+    }
+
+    .dropdown-menu {
+      font-size: 0.85rem;
+    }
+
+    /* FASKES CARD */
+    .faskes-card {
+      border-radius: 16px;
+      border: 1px solid #d9e7f3;
+      padding: 10px 12px;
+      background-color: #ffffff;
+    }
+
+    .faskes-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    .faskes-info-row {
+      font-size: 0.8rem;
+      color: #606f7b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .faskes-info-row + .faskes-info-row {
+      margin-top: 2px;
+    }
+
+    /* TEXTAREA */
+    textarea.form-control {
+      font-size: 0.85rem;
+    }
+
+    /* BUTTON SIMPAN */
+    .btn-simpan {
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 0;
+      width: 100%;
+      margin-top: 18px;
+      margin-bottom: 10px;
+    }
+
+    .btn-simpan:hover {
+      filter: brightness(0.95);
+      color: #fff;
+    }
+
+    /* MODAL JADWAL (bottom sheet) */
+    .modal-bottom .modal-dialog {
+      margin: 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    .modal-bottom .modal-content {
+      border-radius: 20px 20px 0 0;
+      border: none;
+      padding-top: 8px;
+    }
+
+    .modal-backdrop.show {
+      opacity: 0.2;
+    }
+
+    .modal-sheet-handle {
+      width: 40px;
+      height: 4px;
+      border-radius: 999px;
+      background-color: #d6d9e0;
+      margin: 0 auto 6px;
+    }
+
+    .modal-sheet-header {
+      background: #00a6e0;
+      color: #fff;
+      border-radius: 16px 16px 0 0;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .jadwal-box {
+      border-radius: 0 0 16px 16px;
+      border: 1px solid #e0e5f0;
+      border-top: none;
+      padding: 10px 14px 12px;
+      background-color: #ffffff;
+      font-size: 0.85rem;
+    }
+
+    .badge-tutup {
+      background-color: #ff4b55;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.7rem;
+    }
+
+    .angka-besar {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* ========== CHATBOT FLOATING BUTTON ========== */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      padding: 0;
+      border: none;
+      background: none;
+      outline: none;
+      z-index: 1050;
+    }
+
+    .chatbot-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ========== CHATBOT MODAL ========== */
+    .chatbot-modal .modal-content {
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .chatbot-modal .modal-header {
+      background: radial-gradient(circle at top, #31cfff 0%, #007ad9 40%, #0059a8 100%);
+      color: #ffffff;
+    }
+
+    .chatbot-modal .chat-body {
+      background-color: #f4f7fb;
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 0.75rem;
+    }
+
+    .chatbot-modal .bot-bubble {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+      max-width: 80%;
+    }
+
+    .chatbot-modal .user-bubble {
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      max-width: 80%;
+    }
+
+    .chatbot-modal .chat-time {
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+
+    .chatbot-modal .chat-input-area {
+      border-top: 1px solid #e2e8f0;
+      padding: 0.5rem 0.75rem;
+      background-color: #ffffff;
+    }
+
+    .chatbot-modal .btn-send {
+      border-radius: 999px;
+      font-size: 0.8rem;
+      padding-inline: 0.9rem;
+      background: linear-gradient(90deg, #00c0ff, #0096ff);
+      border: none;
+      color: #fff;
+    }
+
+    .chatbot-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="fk-header">
+    <div class="container py-2">
+      <div class="d-flex align-items-center">
+        <!-- ganti href ke halaman sebelumnya -->
+        <a href="layanan.html" class="btn btn-link text-white px-0 me-2">
+          <i class="bi bi-arrow-left fs-4"></i>
+        </a>
+        <h6 class="mb-0 fw-semibold">
+          Fasilitas Kesehatan Tingkat Pertama
+        </h6>
+      </div>
+    </div>
+  </header>
+
+  <main class="mt-2 mb-3">
+    <div class="container" style="max-width: 520px;">
+
+      <!-- PESERTA -->
+      <div class="field-box">
+        <div class="field-label">Peserta</div>
+        <select class="form-select form-select-sm">
+          <option selected>SILANG WASIS WICAKSONO (0001378582277)</option>
+          <option>Peserta Lain 1</option>
+          <option>Peserta Lain 2</option>
+        </select>
+      </div>
+
+      <!-- FASKES TINGKAT PERTAMA -->
+      <div class="field-box">
+        <div class="field-label mb-1">Faskes Tingkat Pertama</div>
+
+        <div class="faskes-card d-flex justify-content-between align-items-start">
+          <div>
+            <div class="faskes-name">TAMBUN</div>
+            <div class="faskes-info-row">
+              <i class="bi bi-geo-alt-fill"></i>
+              <span>JL. SULTAN HASANUDIN NO.5</span>
+            </div>
+            <div class="faskes-info-row">
+              <i class="bi bi-telephone-fill"></i>
+              <span>021-82679878</span>
+            </div>
+          </div>
+          <div>
+            <!-- icon dropdown (kalau nanti mau ganti faskes) -->
+            <i class="bi bi-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- PILIH POLI -->
+      <div class="field-box">
+        <div class="field-label">Pilih Poli</div>
+        <div class="dropdown">
+          <button
+            class="field-select-btn"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            <span>Kunjungan Online</span>
+            <i class="bi bi-caret-down-fill"></i>
+          </button>
+          <ul class="dropdown-menu w-100">
+            <li><h6 class="dropdown-header">Poli Faskes</h6></li>
+            <li><a class="dropdown-item" href="#">POLI UMUM</a></li>
+            <li><a class="dropdown-item" href="#">POLI KIA</a></li>
+            <li><a class="dropdown-item" href="#">UGD</a></li>
+            <li><a class="dropdown-item" href="#">POLI PERSALINAN</a></li>
+            <li><a class="dropdown-item" href="#">POLI KB</a></li>
+            <li><a class="dropdown-item" href="#">POLI GIGI &amp; MULUT</a></li>
+            <li><a class="dropdown-item" href="#">LABORATORIUM</a></li>
+            <li><a class="dropdown-item" href="#">POLI LANSIA</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Kunjungan Online</a></li>
+            <li><a class="dropdown-item" href="#">Home-Visit</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PILIH TANGGAL DAFTAR -->
+      <div class="field-box">
+        <div class="field-label">Pilih Tanggal Daftar</div>
+        <div class="dropdown">
+          <button
+            class="field-select-btn"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            <span>Hari ini (18-11-2025)</span>
+            <i class="bi bi-caret-down-fill"></i>
+          </button>
+          <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" href="#">Hari ini (18-11-2025)</a></li>
+            <li><a class="dropdown-item" href="#">Besok (19-11-2025)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PILIH JADWAL -->
+      <div class="field-box">
+        <div class="field-label">Pilih Jadwal</div>
+
+        <!-- header info kecil -->
+        <div class="field-inner-label mb-1">Jadwal Belum Tersedia</div>
+
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="field-inner-label mb-0">00:00 - 00:00</div>
+          <span class="badge-tutup">TUTUP</span>
+        </div>
+
+        <!-- tombol buka modal daftar tenaga medis -->
+        <div class="mt-2">
+          <button
+            class="field-select-btn"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#jadwalModal"
+          >
+            <span>Pilih Tenaga Medis</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- KELUHAN -->
+      <div class="field-box">
+        <div class="field-label">Keluhan</div>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder="Silakan isi keluhan . . ."
+        ></textarea>
+      </div>
+
+      <!-- BUTTON SIMPAN -->
+      <button class="btn-simpan" type="button" onclick="window.location.href='ftpsukses.html'">
+  Simpan
+</button>
+
+    </div>
+  </main>
+
+  <!-- MODAL DAFTAR TENAGA MEDIS (BOTTOM SHEET) -->
+  <div class="modal fade modal-bottom" id="jadwalModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-sheet-handle"></div>
+
+        <div class="container modal-body-sheet pb-3">
+
+          <div class="modal-sheet-header">
+            Daftar Tenaga Medis
+          </div>
+
+          <div class="jadwal-box">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <div class="fw-semibold">Jadwal Belum Tersedia</div>
+                <div>00:00 - 00:00</div>
+              </div>
+              <span class="badge-tutup">TUTUP</span>
+            </div>
+
+            <hr class="my-2">
+
+            <div class="row text-center">
+              <div class="col-4">
+                <div class="field-inner-label mb-1">Antrean Diambil</div>
+                <div class="angka-besar">0</div>
+              </div>
+              <div class="col-4">
+                <div class="field-inner-label mb-1">Antrean Panggil</div>
+                <div class="angka-besar">-</div>
+              </div>
+              <div class="col-4">
+                <div class="field-inner-label mb-1">Sisa Antrean</div>
+                <div class="angka-besar">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 text-end">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">
+              Tutup
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING CHATBOT BUTTON -->
+  <button
+    type="button"
+    class="chatbot-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#chatbotModal"
+  >
+    <img src="/assets/sani.jpg" alt="Chatbot" class="chatbot-img">
+  </button>
+
+  <!-- CHATBOT MODAL -->
+  <div class="modal fade chatbot-modal" id="chatbotModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-end modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header py-2 d-flex align-items-center">
+          <img src="/assets/sani.jpg" alt="Avatar Bot" class="chatbot-avatar me-2">
+          <div>
+            <div class="small fw-semibold">Chatbot JKN</div>
+            <div class="chat-time">Asisten Virtual BPJS Kesehatan</div>
+          </div>
+          <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="chat-body">
+          <div class="d-flex mb-2">
+            <div class="bot-bubble">
+              <div class="fw-semibold mb-1">Halo 👋</div>
+              <div>Saya asisten virtual JKN. Saya dapat membantu menjawab pertanyaan seputar pendaftaran pelayanan di faskes tingkat pertama.</div>
+              <div class="chat-time mt-1">Baru saja</div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mb-2">
+            <div class="user-bubble">
+              Bagaimana cara memilih jadwal tenaga medis?
+              <div class="chat-time mt-1 text-end">Contoh</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <form onsubmit="event.preventDefault();">
+            <div class="input-group input-group-sm">
+              <input
+                type="text"
+                class="form-control rounded-start-pill"
+                placeholder="Ketik pertanyaan Anda..."
+              />
+              <button class="btn btn-send rounded-end-pill" type="submit">
+                <i class="bi bi-send-fill"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="sani-agentic.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      initSaniAgentic("FKTP");
+    });
+  </script>
+  </body>
+  </html>
+
+
+

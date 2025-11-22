@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SANI – Daftar RS Otomatis</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">SANI – Daftar RS</a>
+    </div>
+  </nav>
+
+  <main class="py-4">
+    <div class="container">
+      <h3 class="mb-3">Form Pendaftaran Berobat ke RS</h3>
+      <p class="text-muted">
+        Data di bawah ini diisi otomatis dari perintah kamu di dashboard SANI.
+        Silakan dicek, bisa diubah manual kalau perlu.
+      </p>
+
+      <form class="bg-white p-3 rounded shadow-sm">
+        <div class="mb-3">
+          <label for="nama" class="form-label">Nama Peserta</label>
+          <input type="text" id="nama" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label for="rs" class="form-label">Rumah Sakit Tujuan</label>
+          <input type="text" id="rs" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label for="tanggal" class="form-label">Tanggal Kunjungan</label>
+          <input type="date" id="tanggal" class="form-control" />
+          <div class="form-text">
+            Jika di chat tadi kamu tulis "besok" atau "lusa", SANI mengisi tanggal otomatis.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="keluhan" class="form-label">Keluhan / Keperluan</label>
+          <textarea id="keluhan" rows="3" class="form-control"
+            placeholder="Opsional, misal: kontrol rutin, pemeriksaan lanjutan, dsb."></textarea>
+        </div>
+
+        <button type="button" class="btn btn-primary">
+          Simpan &amp; Kirim (simulasi)
+        </button>
+        <a href="index.html" class="btn btn-link">Kembali ke Dashboard</a>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const namaInput = document.getElementById("nama");
+    const rsInput = document.getElementById("rs");
+    const tanggalInput = document.getElementById("tanggal");
+
+    function formatDateForInput(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function applyDateToken(token) {
+      const today = new Date();
+      if (token === "hari ini") {
+        tanggalInput.value = formatDateForInput(today);
+      } else if (token === "besok") {
+        const d = new Date(today);
+        d.setDate(d.getDate() + 1);
+        tanggalInput.value = formatDateForInput(d);
+      } else if (token === "lusa") {
+        const d = new Date(today);
+        d.setDate(d.getDate() + 2);
+        tanggalInput.value = formatDateForInput(d);
+      }
+    }
+
+    function readQueryAndFill() {
+      const params = new URLSearchParams(window.location.search);
+      const nama = params.get("nama");
+      const rs = params.get("rs");
+      const tgl = params.get("tgl");
+
+      if (nama) namaInput.value = nama;
+      if (rs) rsInput.value = rs;
+      if (tgl) {
+        if (["hari ini", "besok", "lusa"].includes(tgl.toLowerCase())) {
+          applyDateToken(tgl.toLowerCase());
+        } else {
+          tanggalInput.value = tgl; // kalau GPT sudah kasih format tanggal
+        }
+      }
+    }
+
+    readQueryAndFill();
+  </script>
+</body>
+</html>
